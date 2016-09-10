@@ -10,7 +10,7 @@ module Chronic
       :context => :future,
       :now => nil,
       :hours24 => nil,
-      :week_start => :sunday,
+      :week_start => :monday,
       :guess => true,
       :ambiguous_time_range => 6,
       :endian_precedence    => [:middle, :little],
