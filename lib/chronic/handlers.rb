@@ -197,7 +197,7 @@ module Chronic
       handle_rmn_sd_sy(new_tokens + time_tokens, options)
     end
 
-    # Handle scalar-month/scalar-day/scalar-year (endian middle)
+    # Handle scalar-month/scalar-day/scalar-year (us format)
     def handle_sm_sd_sy(tokens, options)
       month = tokens[0].get_tag(ScalarMonth).type
       day = tokens[1].get_tag(ScalarDay).type
@@ -214,7 +214,7 @@ module Chronic
       end
     end
 
-    # Handle scalar-day/scalar-month/scalar-year (endian little)
+    # Handle scalar-day/scalar-month/scalar-year (not us format)
     def handle_sd_sm_sy(tokens, options)
       new_tokens = [tokens[1], tokens[0], tokens[2]]
       time_tokens = tokens.last(tokens.size - 3)

@@ -287,10 +287,10 @@ class TestParsing < TestCase
     time = parse_now("3 jan 10")
     assert_equal Time.local(2010, 1, 3, 12), time
 
-    time = parse_now("3 jan 10", :endian_precedence => :little)
+    time = parse_now("3 jan 10", :country_format => :not_us_format)
     assert_equal Time.local(2010, 1, 3, 12), time
 
-    time = parse_now("3 jan 10", :endian_precedence => :middle)
+    time = parse_now("3 jan 10", :country_format => :us_format)
     assert_equal Time.local(2010, 1, 3, 12), time
   end
 
@@ -304,7 +304,7 @@ class TestParsing < TestCase
     time = parse_now("7/12/11")
     assert_equal Time.local(2011, 7, 12, 12), time
 
-    time = parse_now("7/12/11", :endian_precedence => :little)
+    time = parse_now("7/12/11", :country_format => :not_us_format)
     assert_equal Time.local(2011, 12, 7, 12), time
 
     time = parse_now("9/19/2011 6:05:57 PM")
@@ -381,13 +381,13 @@ class TestParsing < TestCase
     time = parse_now("05/06")
     assert_equal Time.local(2007, 5, 6, 12), time
 
-    time = parse_now("05/06", :endian_precedence => [:little, :medium])
+    time = parse_now("05/06", :country_format => [:not_us_format, :us_format])
     assert_equal Time.local(2007, 6, 5, 12), time
 
     time = parse_now("05/06 6:05:57 PM")
     assert_equal Time.local(2007, 5, 6, 18, 05, 57), time
 
-    time = parse_now("05/06 6:05:57 PM", :endian_precedence => [:little, :medium])
+    time = parse_now("05/06 6:05:57 PM", :country_format => [:not_us_format, :us_format])
     assert_equal Time.local(2007, 6, 5, 18, 05, 57), time
 
     time = parse_now("13/09")
@@ -1040,18 +1040,18 @@ class TestParsing < TestCase
     assert_equal Time.local(2006, 8, 21), span.end
   end
 
-  def test_parse_with_endian_precedence
+  def test_parse_with_country_format
     date = '11/02/2007'
 
-    expect_for_middle_endian = Time.local(2007, 11, 2, 12)
-    expect_for_little_endian = Time.local(2007, 2, 11, 12)
+    expect_for_us_format = Time.local(2007, 11, 2, 12)
+    expect_for_not_us_format = Time.local(2007, 2, 11, 12)
 
-    # default precedence should be toward middle endianness
-    assert_equal expect_for_middle_endian, Chronic.parse(date)
+    # default precedence should be toward US formatt
+    assert_equal expect_for_us_format, Chronic.parse(date)
 
-    assert_equal expect_for_middle_endian, Chronic.parse(date, :endian_precedence => [:middle, :little])
+    assert_equal expect_for_us_format, Chronic.parse(date, :country_format => [:us_format, :not_us_format])
 
-    assert_equal expect_for_little_endian, Chronic.parse(date, :endian_precedence => [:little, :middle])
+    assert_equal expect_for_not_us_format, Chronic.parse(date, :country_format => [:not_us_format, :us_format])
   end
 
   def test_parse_words

@@ -97,11 +97,11 @@ module Chronic
 
   class EndianDefinitions < SpanDefinitions
     def definitions
-      prefered_endian
+      country_format
     end
 
-    def prefered_endian
-      options[:endian_precedence] ||= [:middle, :little]
+    def country_format
+      options[:country_format] ||= [:us_format, :not_us_format]
 
       definitions = [
         Handler.new([:scalar_month, [:separator_slash, :separator_dash], :scalar_day, [:separator_slash, :separator_dash], :scalar_year, :separator_at?, 'time?'], :handle_sm_sd_sy),
@@ -111,13 +111,13 @@ module Chronic
         Handler.new([:scalar_day, :repeater_month_name, :scalar_year, :separator_at?, 'time?'], :handle_sd_rmn_sy)
       ]
 
-      case endian = Array(options[:endian_precedence]).first
-      when :little
+      case country_format = Array(options[:country_format]).first
+      when :not_us_format
         definitions.reverse
-      when :middle
+      when :us_format
         definitions
       else
-        raise ArgumentError, "Unknown endian option '#{endian}'"
+        raise ArgumentError, "Unknown country format option '#{country_format}'"
       end
     end
   end

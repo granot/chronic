@@ -13,7 +13,7 @@ module Chronic
       :week_start => :monday,
       :guess => true,
       :ambiguous_time_range => 6,
-      :endian_precedence    => [:middle, :little],
+      :country_format    => [:us_format, :not_us_format],
       :ambiguous_year_future_bias => 50
     }
 
@@ -44,10 +44,10 @@ module Chronic
     #                  5:00, it would assume that means 5:00pm. If `:none`
     #                  is given, no assumption will be made, and the first
     #                  matching instance of that time will be used.
-    #        :endian_precedence - By default, Chronic will parse "03/04/2011"
+    #        :country_format - By default, Chronic will parse "03/04/2011"
     #                 as the fourth day of the third month. Alternatively you
     #                 can tell Chronic to parse this as the third day of the
-    #                 fourth month by setting this to [:little, :middle].
+    #                 fourth month by setting this to [:not_us_format, :us_format].
     #        :ambiguous_year_future_bias - When parsing two digit years
     #                 (ie 79) unlike Rubys Time class, Chronic will attempt
     #                 to assume the full year using this figure. Chronic will

@@ -35,7 +35,7 @@ Chronic.parse('may 27th', :now => Time.local(2000, 1, 1))
 Chronic.parse('may 27th', :guess => false)
   #=> Sun May 27 00:00:00 PDT 2007..Mon May 28 00:00:00 PDT 2007
 
-Chronic.parse('6/4/2012', :endian_precedence => :little)
+Chronic.parse('6/4/2012', :country_format => :not_us_format)
   #=> Fri Apr 06 00:00:00 PDT 2012
 
 Chronic.parse('INVALID DATE')

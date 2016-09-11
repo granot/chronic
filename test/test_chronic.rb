@@ -55,8 +55,7 @@ class TestChronic < TestCase
     assert_equal Time.local(2006, 11, 16), Chronic::Parser.new.guess(span)
   end
 
-  def test_endian_definitions
-    # middle, little
+  def test_country_format_definitions
     endians = [
       Chronic::Handler.new([:scalar_month, [:separator_slash, :separator_dash], :scalar_day, [:separator_slash, :separator_dash], :scalar_year, :separator_at?, 'time?'], :handle_sm_sd_sy),
       Chronic::Handler.new([:scalar_month, [:separator_slash, :separator_dash], :scalar_day, :separator_at?, 'time?'], :handle_sm_sd),
@@ -67,14 +66,14 @@ class TestChronic < TestCase
 
     assert_equal endians, Chronic::SpanDictionary.new.definitions[:endian]
 
-    defs = Chronic::SpanDictionary.new(:endian_precedence => :little).definitions
+    defs = Chronic::SpanDictionary.new(:country_format => :not_us_format).definitions
     assert_equal endians.reverse, defs[:endian]
 
-    defs = Chronic::SpanDictionary.new(:endian_precedence => [:little, :middle]).definitions
+    defs = Chronic::SpanDictionary.new(:country_format => [:not_us_format, :us_format]).definitions
     assert_equal endians.reverse, defs[:endian]
 
     assert_raises(ArgumentError) do
-      Chronic::SpanDictionary.new(:endian_precedence => :invalid).definitions
+      Chronic::SpanDictionary.new(:country_format => :invalid).definitions
     end
   end
 
